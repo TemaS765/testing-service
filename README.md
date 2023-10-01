@@ -1,2 +1,2 @@
 # testing-service
-Service for texting
+Service for testing
