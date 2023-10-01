@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ exam.name }}!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .result-wrapper {display: flex}
+    .result-column {width: 50%}
+    .true-item {color: green}
+    .false-item {color: red}
+</style>
+
+<div class="example-wrapper">
+    <h1>{{ exam.name }}!</h1>
+    <div class="result-wrapper">
+        <div class="result-column">
+            <h5>True results:</h5>
+            <ul>
+                {% for result in trueResults %}
+                    <fieldset>
+                        <legend><b>{{ result.text }}</b></legend>
+                        {% for answer in result.answers %}
+                            <div {% if answer.isSelected %} class="{% if answer.isTrue %}true{% else %}false{% endif %}-item{% endif %}">
+                                <span>{{ answer.num }}.</span>
+                                <input
+                                        disabled="disabled"
+                                        type="checkbox"
+                                        {% if answer.isSelected %}
+                                            checked
+                                        {% endif %}
+                                />
+                                <label>{{ answer.text }}</label>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                    <br>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="result-column">
+            <h5>False results:</h5>
+            <ul>
+                {% for result in falseResults %}
+                    <fieldset>
+                        <legend><b>{{ result.text }}</b></legend>
+                        {% for answer in result.answers %}
+                            <div {% if answer.isSelected %} class="{% if answer.isTrue %}true{% else %}false{% endif %}-item{% endif %}">
+                                <span>{{ answer.num }}.</span>
+                                <input
+                                        disabled="disabled"
+                                        type="checkbox"
+                                        {% if answer.isSelected %}
+                                            checked
+                                        {% endif %}
+                                />
+                                <label>{{ answer.text }}</label>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                    <br>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
