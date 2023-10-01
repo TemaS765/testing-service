@@ -170,3 +170,4 @@ fabric.properties
 !.idea/runConfigurations
 
 ./postgres/*
+./postgres/data/*
