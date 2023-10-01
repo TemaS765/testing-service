@@ -1,0 +1,48 @@
+version: '3.8'
+
+networks:
+  testing-service:
+
+services:
+
+  nginx:
+    image: nginx:1.25
+    container_name: testing-service_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/project
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - testing-service
+    depends_on:
+      - php
+      - postgres
+
+  php:
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    container_name: testing-service_php
+    command: sh -c "symfony console doctrine:migrations:migrate && php-fpm"
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./app:/var/www/project
+    networks:
+      - testing-service
+
+  postgres:
+    image: postgres:16
+    container_name: testing-service_postgres
+    ports:
+      - "6432:5432"
+    restart: on-failure
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: testing-service
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data:rw
+    networks:
+      - testing-service
