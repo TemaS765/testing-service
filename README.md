@@ -1,4 +1,4 @@
-# testing-service
+# Testing service
 Service for testing
 
 # Install
