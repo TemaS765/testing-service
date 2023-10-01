@@ -24,7 +24,7 @@ services:
       context: .
       dockerfile: ./php/Dockerfile
     container_name: testing-service_php
-    command: sh -c "symfony console doctrine:migrations:migrate && php-fpm"
+#    command: sh -c "symfony console doctrine:migrations:migrate && php-fpm"
     ports:
       - "9000:9000"
     volumes:
